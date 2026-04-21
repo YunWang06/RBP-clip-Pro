@@ -1,0 +1,6 @@
+{
+  "name": "RBP-SearchPro",
+  "description": "A comprehensive database for retrieving RNA Binding Proteins, Cell Lines, and CLIP-seq data.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
