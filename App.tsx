@@ -5,7 +5,7 @@ import { Sidebar } from './components/Sidebar';
 import { RbpDetails } from './components/RbpDetails';
 import { PeakView } from './components/PeakView';
 import { FilterState, FilterCategory, RbpRecord, PeakData } from './types';
-import { MOCK_DATA, getMockPeaks } from './constants';
+import { MOCK_DATA, getMockPeaks, CELL_LINES } from './constants';
 import { Search, Database, Dna, Activity, FlaskConical, ArrowRight } from 'lucide-react';
 
 type ViewState = 'search' | 'details' | 'peaks';
@@ -159,7 +159,7 @@ export default function App() {
                         Search for RNA Binding Proteins
                     </h2>
                     
-                    <div className="relative flex items-center w-full shadow-2xl rounded-xl overflow-hidden ring-1 ring-white/10 bg-white/5 backdrop-blur-sm border border-white/10">
+                    <div className="relative flex items-center w-full shadow-2xl rounded-xl overflow-hidden ring-1 ring-white/10 bg-white/5 backdrop-blur-sm border border-white/10 mb-8">
                         <div className="pl-6 pr-4 flex items-center justify-center">
                             <Search className="text-slate-400" size={24} />
                         </div>
@@ -177,6 +177,24 @@ export default function App() {
                         >
                             搜索
                         </button>
+                    </div>
+
+                    {/* Statistics Bar - NEW */}
+                    <div className="flex flex-wrap justify-center gap-8 text-slate-300">
+                        <div className="flex flex-col items-center">
+                            <span className="text-3xl font-bold text-white leading-tight">356</span>
+                            <span className="text-xs uppercase tracking-widest text-slate-500 font-semibold">RBPs</span>
+                        </div>
+                        <div className="w-px h-10 bg-white/10 hidden sm:block"></div>
+                        <div className="flex flex-col items-center">
+                            <span className="text-3xl font-bold text-white leading-tight">{CELL_LINES.length}</span>
+                            <span className="text-xs uppercase tracking-widest text-slate-500 font-semibold">Cell Lines</span>
+                        </div>
+                        <div className="w-px h-10 bg-white/10 hidden sm:block"></div>
+                        <div className="flex flex-col items-center">
+                            <span className="text-3xl font-bold text-white leading-tight">1.2M+</span>
+                            <span className="text-xs uppercase tracking-widest text-slate-500 font-semibold">Binding Sites</span>
+                        </div>
                     </div>
                 </div>
               </div>

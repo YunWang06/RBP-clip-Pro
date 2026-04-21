@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { ArrowLeft, FileText, Download } from 'lucide-react';
+import { ArrowLeft, FileText, Download, Layout } from 'lucide-react';
 import { PeakData } from '../types';
+import { GenomicBrowser } from './GenomicBrowser';
 
 interface PeakViewProps {
   targetGene: string;
@@ -30,6 +31,11 @@ export const PeakView: React.FC<PeakViewProps> = ({ targetGene, peaks, onBack })
 
       <div className="max-w-6xl mx-auto p-8">
         
+        {/* IGV-like Genomic Visualization */}
+        <div className="mb-8">
+            <GenomicBrowser peaks={peaks} targetGene={targetGene} />
+        </div>
+
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
             <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
                 <div>

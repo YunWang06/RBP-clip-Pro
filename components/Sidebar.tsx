@@ -67,7 +67,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ filters, onToggleFilter, onCle
 
         {/* Section 2: Cell Line */}
         <div className="mb-8">
-          {renderSectionHeader('2. 细胞系 (Cell Line)', 'cellLines')}
+          {renderSectionHeader(`2. 细胞系 (${CELL_LINES.length})`, 'cellLines')}
           
           {/* Internal Search Box for Cell Lines */}
           <div className="relative mb-4">

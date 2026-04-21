@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft, Dna, Activity, BarChart3, Info, Layers, Microscope, ExternalLink, Database, Puzzle, Fingerprint } from 'lucide-react';
+import { ArrowLeft, BarChart3, Layers, ExternalLink, Database, Fingerprint } from 'lucide-react';
 import { RbpRecord, TargetGene } from '../types';
 import { getMockTargets } from '../constants';
 
@@ -46,103 +46,120 @@ export const RbpDetails: React.FC<RbpDetailsProps> = ({ rbp, onBack, onViewPeaks
 
       <div className="max-w-6xl mx-auto p-8 space-y-8">
         
-        {/* --- SECTION 1: Basic Information --- */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-          <div className="bg-slate-900 px-8 py-6 text-white flex justify-between items-start">
-             <div>
-                <h1 className="text-3xl font-bold tracking-tight mb-2 flex items-center gap-3">
-                    {rbp.name}
-                    <span className="text-sm font-normal bg-white/20 text-white px-2 py-0.5 rounded border border-white/20 font-mono">
-                        {rbp.geneId}
-                    </span>
-                </h1>
-                <p className="text-slate-300 text-sm max-w-2xl">{rbp.description}</p>
-             </div>
-             <div className="text-right">
-                 <div className="text-xs text-slate-400 uppercase tracking-widest mb-1">Gene Type</div>
-                 <div className="font-semibold text-white">{rbp.geneType}</div>
-             </div>
+        {/* Entity Header */}
+        <div className="flex items-end justify-between border-b pb-6 border-slate-200">
+           <div>
+              <h1 className="text-4xl font-extrabold text-slate-900 flex items-center gap-4">
+                {rbp.name}
+                <span className="text-lg font-mono font-medium text-slate-400">({rbp.geneId})</span>
+              </h1>
+              <p className="text-slate-500 mt-2 max-w-3xl leading-relaxed">{rbp.description}</p>
+           </div>
+           <div className="flex items-center gap-2 text-sm font-medium text-slate-400 italic">
+               <Fingerprint size={16} />
+               RNA Binding Protein
+           </div>
+        </div>
+
+        {/* --- SECTION 1: Basic Information (Refined Style) --- */}
+        <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+          {/* Header Block with Scientific Vibe */}
+          <div className="px-6 py-4 border-b border-slate-200 flex items-center gap-4 bg-white">
+            <div className="w-10 h-10 rounded-full bg-[#1b4168] flex items-center justify-center text-white font-bold text-lg">
+              BI
+            </div>
+            <h2 className="text-xl font-medium text-slate-800">RBP 基本信息</h2>
           </div>
           
-          <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-             {/* Function & Domains */}
-             <div>
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4 border-b border-slate-100 pb-2">
-                    Biological Function
-                </h3>
-                <div className="flex items-start gap-3 mb-6">
-                    <div className="mt-1 p-1.5 bg-blue-100 text-blue-600 rounded">
-                        <Activity size={18} />
-                    </div>
-                    <div>
-                        <span className="font-medium text-slate-800 block">Primary Function</span>
-                        <span className="text-slate-600 text-sm">{rbp.geneFunction}</span>
-                    </div>
-                </div>
-
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4 border-b border-slate-100 pb-2">
-                    Protein Domains
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                    {rbp.domains.map((dom, idx) => (
-                        <div key={idx} className="flex items-center bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5">
-                            <Puzzle size={14} className="text-slate-400 mr-2" />
-                            <span className="text-sm text-slate-700">{dom}</span>
-                        </div>
-                    ))}
-                </div>
-             </div>
-
-             {/* Experiment Stats */}
-             <div className="bg-slate-50 rounded-lg p-6 border border-slate-100">
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">
-                    Experimental Overview
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <div className="text-xs text-slate-500 mb-1">Primary Protocol</div>
-                        <div className="font-semibold text-slate-800 flex items-center">
-                            {rbp.protocol}
-                            <span className="ml-2 inline-block w-2 h-2 rounded-full bg-green-500"></span>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="text-xs text-slate-500 mb-1">Total Binding Sites</div>
-                        <div className="font-semibold text-slate-800">{rbp.bindingSitesCount.toLocaleString()}</div>
-                    </div>
-                    <div>
-                        <div className="text-xs text-slate-500 mb-1">Cell Lines</div>
-                        <div className="font-semibold text-slate-800">{rbp.cellLines.length} Tested</div>
-                    </div>
-                    <div>
-                        <div className="text-xs text-slate-500 mb-1">Data Confidence</div>
-                        <div className="font-semibold text-slate-800">High</div>
-                    </div>
-                </div>
-             </div>
+          <div className="p-6">
+            <table className="w-full text-sm border-separate border-spacing-0">
+                <tbody>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">RBP 名称</td>
+                        <td className="py-3 pl-6 text-slate-800 font-bold text-lg">{rbp.name}</td>
+                    </tr>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">Ensembl Gene ID</td>
+                        <td className="py-3 pl-6 text-slate-600 font-mono">{rbp.geneId}</td>
+                    </tr>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">物种</td>
+                        <td className="py-3 pl-6 text-slate-600 italic">Homo sapiens (人类)</td>
+                    </tr>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">基因分类 (Gene Type)</td>
+                        <td className="py-3 pl-6 text-slate-600">{rbp.geneType}</td>
+                    </tr>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">实验策略</td>
+                        <td className="py-3 pl-6">
+                            <div className="flex flex-wrap gap-2">
+                                {rbp.methods.map((m, i) => (
+                                    <span key={i} className="px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-100 rounded text-xs font-semibold">
+                                        {m}
+                                    </span>
+                                ))}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">关联细胞系/组织</td>
+                        <td className="py-3 pl-6 text-slate-600 leading-relaxed">{rbp.cellLines.join(', ')}</td>
+                    </tr>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">结合位点总数</td>
+                        <td className="py-3 pl-6 text-slate-700 font-mono font-bold text-base">{rbp.bindingSitesCount.toLocaleString()}</td>
+                    </tr>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">主要生物学功能</td>
+                        <td className="py-3 pl-6 text-slate-600 leading-relaxed italic">{rbp.geneFunction}</td>
+                    </tr>
+                    <tr className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">蛋白特征域 (Domains)</td>
+                        <td className="py-3 pl-6">
+                            <div className="flex flex-wrap gap-2">
+                                {rbp.domains.map((dom, i) => (
+                                    <span key={i} className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">
+                                        {dom}
+                                    </span>
+                                ))}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="w-1/4 py-3 pr-8 text-right font-bold text-slate-700 whitespace-nowrap bg-slate-50/50">数据库状态</td>
+                        <td className="py-3 pl-6">
+                            <div className="inline-flex rounded overflow-hidden border border-[#4d864d]">
+                                <div className="bg-[#4d864d] text-white text-[10px] font-bold px-1.5 py-0.5 uppercase">Status</div>
+                                <div className="bg-white text-[#4d864d] text-[10px] font-medium px-2 py-0.5">Released</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
           </div>
         </div>
 
-        {/* --- SECTION 2: Visualization (Binding & Expression) --- */}
+        {/* --- SECTION 2: Visualization Charts --- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Binding Distribution */}
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col">
-            <div className="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
-                <h3 className="text-lg font-bold text-slate-800 flex items-center">
-                    <Layers size={20} className="mr-2 text-indigo-500" />
-                    Binding Region Distribution
-                </h3>
+          <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+            <div className="px-6 py-4 border-b border-slate-200 flex items-center gap-4 bg-white">
+              <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                BR
+              </div>
+              <h3 className="text-xl font-medium text-slate-800">Binding Region Distribution</h3>
             </div>
-            <div className="flex-1 flex flex-col justify-center space-y-5">
+            <div className="p-8 flex-1 flex flex-col justify-center space-y-6">
                 {rbp.bindingDistribution.map((item, idx) => (
                     <div key={idx}>
-                        <div className="flex justify-between text-sm mb-1.5">
-                            <span className="font-medium text-slate-700">{item.region}</span>
+                        <div className="flex justify-between text-sm mb-2">
+                            <span className="font-semibold text-slate-700">{item.region}</span>
                             <span className="text-slate-500 font-mono">{item.percentage}%</span>
                         </div>
-                        <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                        <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200/50">
                             <div 
-                                className="bg-indigo-500 h-3 rounded-full relative" 
+                                className="bg-indigo-500 h-3 rounded-full relative shadow-[0_0_8px_rgba(99,102,241,0.3)]" 
                                 style={{ width: `${item.percentage}%` }}
                             ></div>
                         </div>
@@ -152,25 +169,26 @@ export const RbpDetails: React.FC<RbpDetailsProps> = ({ rbp, onBack, onViewPeaks
           </div>
 
           {/* Tissue Expression */}
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col">
-            <div className="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
-                <h3 className="text-lg font-bold text-slate-800 flex items-center">
-                    <BarChart3 size={20} className="mr-2 text-rose-500" />
-                    Tissue Expression (TPM)
-                </h3>
+          <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+            <div className="px-6 py-4 border-b border-slate-200 flex items-center gap-4 bg-white">
+              <div className="w-10 h-10 rounded-full bg-rose-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                TE
+              </div>
+              <h3 className="text-xl font-medium text-slate-800">Tissue Expression (TPM)</h3>
             </div>
-            <div className="flex-1 flex items-end justify-between space-x-4 pt-4 px-4 h-48">
+            <div className="p-8 flex-1 flex items-end justify-between space-x-4 pt-8 px-6 min-h-[250px]">
                 {rbp.expressionProfile.map((exp, idx) => (
-                    <div key={idx} className="flex flex-col items-center flex-1 h-full justify-end group">
+                    <div key={idx} className="flex flex-col items-center flex-1 h-full justify-end group mt-4">
                         <div 
-                            className="w-full bg-rose-400 rounded-t-sm relative group-hover:bg-rose-500 transition-all"
+                            className="w-full bg-rose-400 rounded-t-sm relative group-hover:bg-rose-500 transition-all shadow-[0_-2px_10px_rgba(251,113,133,0.2)]"
                             style={{ height: `${Math.min(exp.value, 100)}%` }}
                         >
-                            <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs py-1 px-2 rounded pointer-events-none transition-opacity">
-                                {exp.value}
+                            <div className="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1.5 px-2.5 rounded font-bold pointer-events-none transition-opacity z-20 whitespace-nowrap">
+                                {exp.value} TPM
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
                             </div>
                         </div>
-                        <span className="text-xs font-medium text-slate-600 mt-3">{exp.tissue}</span>
+                        <span className="text-[10px] font-bold text-slate-500 mt-4 uppercase tracking-wider">{exp.tissue}</span>
                     </div>
                 ))}
             </div>
@@ -178,22 +196,21 @@ export const RbpDetails: React.FC<RbpDetailsProps> = ({ rbp, onBack, onViewPeaks
         </div>
 
         {/* --- SECTION 3: Binding Sites Records --- */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="px-8 py-6 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h3 className="text-lg font-bold text-slate-900 flex items-center">
-                        <Database size={20} className="mr-2 text-blue-500" />
-                        Binding Sites Records
-                    </h3>
-                    <p className="text-sm text-slate-500 mt-1">
-                        List of top identified target genes bound by {rbp.name}. Click a gene to view raw peaks.
-                    </p>
+        <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-white">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                        BS
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-medium text-slate-800">Binding Sites Records</h3>
+                        <p className="text-xs text-slate-400 mt-0.5 tracking-tight">Top identified target genes bound by {rbp.name}</p>
+                    </div>
                 </div>
-                <div className="flex gap-2">
-                    <button className="px-3 py-1.5 text-sm font-medium text-slate-600 bg-slate-100 rounded hover:bg-slate-200 transition-colors">
-                        Download All
-                    </button>
-                </div>
+                <button className="px-4 py-1.5 text-xs font-bold text-slate-700 bg-slate-100 rounded border border-slate-200 hover:bg-slate-200 transition-all shadow-sm flex items-center gap-2">
+                    <Database size={14} />
+                    Download CSV
+                </button>
             </div>
 
             <div className="overflow-x-auto">
@@ -246,15 +263,15 @@ export const RbpDetails: React.FC<RbpDetailsProps> = ({ rbp, onBack, onViewPeaks
 
         {/* --- SECTION 4: Top Enriched Motifs --- */}
         {rbp.motifs && rbp.motifs.length > 0 && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-              <div className="px-8 py-6 border-b border-slate-200">
-                  <h3 className="text-lg font-bold text-slate-900 flex items-center">
-                      <Fingerprint size={20} className="mr-2 text-orange-500" />
-                      Top Enriched Motifs
-                  </h3>
-                  <p className="text-sm text-slate-500 mt-1">
-                      Enriched sequence motifs identified from CLIP-seq binding clusters.
-                  </p>
+          <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-200 flex items-center gap-4 bg-white">
+                  <div className="w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                    EM
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-medium text-slate-800">Top Enriched Motifs</h3>
+                    <p className="text-xs text-slate-400 mt-0.5 tracking-tight">Sequence motifs identified from {rbp.name} CLIP-seq clusters</p>
+                  </div>
               </div>
 
               <div className="overflow-x-auto">
